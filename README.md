@@ -246,3 +246,18 @@ Use ‘Get-NetGPO’ for group policies. Narrow it down with ‘Get-NetGPO | sel
 
 #
 
+Turn off execution policy using ‘powershell -ep bypass’.
+
+Run bloodhound with ‘. .\SharpHound.ps1’.
+
+Run ingestor ‘Invoke-BloodHound -CollectionMethod All -Domain MARVEL.local ZipFileName file.zip’.
+
+Copy this zip file to Kali and upload the data to bloodhound.
+
+You can see the shortest path to domain is through the circled user:
+
+![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265477682561286224/image.png?ex=66a1a76e&is=66a055ee&hm=80b7f22dbec38247eb65df3a16aeb873dec3f09cb5728875d50144132d2a3e19&)
+
+You can also see high value targets as well:
+
+![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265482340981936262/image.png?ex=66a1abc5&is=66a05a45&hm=953143562d95d9d3594867ea9525628f9636b42fb36891fff62fc07f3b0ae8e4&)
