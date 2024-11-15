@@ -333,7 +333,7 @@ Privilege Access Management (PAM):
 
 Tokens give you temporary access just like cookies. 
 Two types:
-Delegate tokens are used when you login to a machine or use remote desktop
+Delegate tokens are used when you login to a machine or use remote desktop. 
 Impersonate tokens are used when there is a network drive attached or domain logon script
 
 #
