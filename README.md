@@ -516,6 +516,10 @@ Now we can access other computers and their directories like the computer THEPUN
 
 Taking this further, we can run psexec if we have it installed to launch a shell for THEPUNISHER, giving us complete access.
 
+Mitigation:
+
+As far as I know, you can mitigate this by changing the Kerberos Ticket Granting Ticket (KRBTGT) password *TWICE* to prevent the takeover. Change the password twice because of Microsoft's password history settings.
+
 #
 
 <p align="center">
