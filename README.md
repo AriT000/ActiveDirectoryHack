@@ -63,7 +63,6 @@ LLMNR Poisoning can be mitigated by disabling LLMNR and NBT-NS as well, as that 
 If LLMNR/NBT-NS cannot be disabled or must be used, then:
 * Require Network Access Control
 * Require long and complex passwords above 14 characters.
-* 
 <br/>
 <br/>
 
